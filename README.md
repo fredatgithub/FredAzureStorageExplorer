@@ -1,0 +1,2 @@
+# FredAzureStorageExplorer
+My fork
