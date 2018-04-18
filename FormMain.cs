@@ -18,6 +18,7 @@ namespace FredAzureStorageExplorer
         public FormMain()
         {
             InitializeComponent();
+            //Add any other initialization items
         }
 
         private void ExitToolStripMenuItemClick(object sender, EventArgs e)
