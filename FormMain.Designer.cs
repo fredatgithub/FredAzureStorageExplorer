@@ -219,7 +219,7 @@
             this.buttonTableClear.TabIndex = 28;
             this.buttonTableClear.Text = "Clear";
             this.buttonTableClear.UseVisualStyleBackColor = true;
-            this.buttonTableClear.Click += new System.EventHandler(this.buttonTableClear_Click);
+            this.buttonTableClear.Click += new System.EventHandler(this.ButtonTableClearClick);
             // 
             // buttonTableUpdate
             // 
@@ -229,7 +229,7 @@
             this.buttonTableUpdate.TabIndex = 27;
             this.buttonTableUpdate.Text = "Update";
             this.buttonTableUpdate.UseVisualStyleBackColor = true;
-            this.buttonTableUpdate.Click += new System.EventHandler(this.buttonTableUpdate_Click);
+            this.buttonTableUpdate.Click += new System.EventHandler(this.ButtonTableUpdateClick);
             // 
             // textBoxTableComments
             // 
@@ -418,7 +418,7 @@
             this.buttonTableInsert.TabIndex = 4;
             this.buttonTableInsert.Text = "Insert";
             this.buttonTableInsert.UseVisualStyleBackColor = true;
-            this.buttonTableInsert.Click += new System.EventHandler(this.buttonTableInsert_Click);
+            this.buttonTableInsert.Click += new System.EventHandler(this.ButtonTableInsertClick);
             // 
             // textBoxTablePartitionKey
             // 
@@ -445,7 +445,7 @@
             this.buttonLoadTable.TabIndex = 1;
             this.buttonLoadTable.Text = "Load";
             this.buttonLoadTable.UseVisualStyleBackColor = true;
-            this.buttonLoadTable.Click += new System.EventHandler(this.buttonLoadTable_Click);
+            this.buttonLoadTable.Click += new System.EventHandler(this.ButtonLoadTableClick);
             // 
             // listViewTable
             // 
@@ -460,7 +460,7 @@
             this.listViewTable.Size = new System.Drawing.Size(1353, 326);
             this.listViewTable.TabIndex = 0;
             this.listViewTable.UseCompatibleStateImageBehavior = false;
-            this.listViewTable.SelectedIndexChanged += new System.EventHandler(this.listViewTable_SelectedIndexChanged);
+            this.listViewTable.SelectedIndexChanged += new System.EventHandler(this.ListViewTableSelectedIndexChanged);
             // 
             // tabPageBlob
             // 
@@ -505,7 +505,7 @@
             this.buttonBlobUploadGetFile.TabIndex = 32;
             this.buttonBlobUploadGetFile.Text = "...";
             this.buttonBlobUploadGetFile.UseVisualStyleBackColor = true;
-            this.buttonBlobUploadGetFile.Click += new System.EventHandler(this.buttonBlobUploadGetFile_Click);
+            this.buttonBlobUploadGetFile.Click += new System.EventHandler(this.ButtonBlobUploadGetFileClick);
             // 
             // textBoxBlobUploadFilePath
             // 
@@ -515,7 +515,7 @@
             this.textBoxBlobUploadFilePath.Size = new System.Drawing.Size(704, 30);
             this.textBoxBlobUploadFilePath.TabIndex = 31;
             this.textBoxBlobUploadFilePath.Text = "c:\\";
-            this.textBoxBlobUploadFilePath.TextChanged += new System.EventHandler(this.textBoxBlobUploadFilePath_TextChanged);
+            this.textBoxBlobUploadFilePath.TextChanged += new System.EventHandler(this.TextBoxBlobUploadFilePathTextChanged);
             // 
             // buttonBlobUpload
             // 
@@ -526,7 +526,7 @@
             this.buttonBlobUpload.TabIndex = 29;
             this.buttonBlobUpload.Text = "Upload";
             this.buttonBlobUpload.UseVisualStyleBackColor = true;
-            this.buttonBlobUpload.Click += new System.EventHandler(this.buttonBlobUpload_Click);
+            this.buttonBlobUpload.Click += new System.EventHandler(this.ButtonBlobUploadClick);
             // 
             // labelBlobUploadPath
             // 
@@ -639,7 +639,7 @@
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(205, 30);
             this.exitToolStripMenuItem.Text = "E&xit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItemClick);
             // 
             // editToolStripMenuItem
             // 
@@ -683,7 +683,7 @@
             this.cutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
             this.cutToolStripMenuItem.Size = new System.Drawing.Size(201, 30);
             this.cutToolStripMenuItem.Text = "Cu&t";
-            this.cutToolStripMenuItem.Click += new System.EventHandler(this.cutToolStripMenuItem_Click);
+            this.cutToolStripMenuItem.Click += new System.EventHandler(this.CutToolStripMenuItemClick);
             // 
             // copyToolStripMenuItem
             // 
@@ -693,7 +693,7 @@
             this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
             this.copyToolStripMenuItem.Size = new System.Drawing.Size(201, 30);
             this.copyToolStripMenuItem.Text = "&Copy";
-            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
+            this.copyToolStripMenuItem.Click += new System.EventHandler(this.CopyToolStripMenuItemClick);
             // 
             // pasteToolStripMenuItem
             // 
@@ -703,7 +703,7 @@
             this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
             this.pasteToolStripMenuItem.Size = new System.Drawing.Size(201, 30);
             this.pasteToolStripMenuItem.Text = "&Paste";
-            this.pasteToolStripMenuItem.Click += new System.EventHandler(this.pasteToolStripMenuItem_Click);
+            this.pasteToolStripMenuItem.Click += new System.EventHandler(this.PasteToolStripMenuItemClick);
             // 
             // toolStripSeparator4
             // 
@@ -793,8 +793,8 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormMain";
             this.Text = "Fred Azure Storage Explorer";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
-            this.Load += new System.EventHandler(this.FormMain_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMainFormClosing);
+            this.Load += new System.EventHandler(this.FormMainLoad);
             this.tabControlMain.ResumeLayout(false);
             this.tabPageSas.ResumeLayout(false);
             this.tabPageSas.PerformLayout();

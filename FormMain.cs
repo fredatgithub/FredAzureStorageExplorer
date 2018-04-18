@@ -20,7 +20,7 @@ namespace FredAzureStorageExplorer
             InitializeComponent();
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ExitToolStripMenuItemClick(object sender, EventArgs e)
         {
             SaveWindowValues();
             Application.Exit();
@@ -34,6 +34,7 @@ namespace FredAzureStorageExplorer
             Left = Settings.Default.WindowLeft < 0 ? 0 : Settings.Default.WindowLeft;
             tabControlMain.SelectedIndex = Settings.Default.tabControlMainSelectedIndex;
             textBoxBlobUploadFilePath.Text = Settings.Default.textBoxBlobUploadFilePath;
+            // Add any other control parameter you want to save between sessions
         }
 
         private void SaveWindowValues()
@@ -44,17 +45,18 @@ namespace FredAzureStorageExplorer
             Settings.Default.WindowTop = Top;
             Settings.Default.tabControlMainSelectedIndex = tabControlMain.SelectedIndex;
             Settings.Default.textBoxBlobUploadFilePath = textBoxBlobUploadFilePath.Text;
+            // Add any other control parameter you want to save between sessions
             Settings.Default.Save();
         }
 
         private void DisplayTitle()
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();
+            var assembly = Assembly.GetExecutingAssembly();
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
             Text += $@" V{fvi.FileMajorPart}.{fvi.FileMinorPart}.{fvi.FileBuildPart}.{fvi.FilePrivatePart}";
         }
 
-        private void FormMain_Load(object sender, EventArgs e)
+        private void FormMainLoad(object sender, EventArgs e)
         {
             DisplayTitle();
             GetWindowValues();
@@ -63,7 +65,7 @@ namespace FredAzureStorageExplorer
             textBoxAccountKey.Text = Settings.Default.accountKey;
         }
 
-        private void buttonLoadTable_Click(object sender, EventArgs e)
+        private void ButtonLoadTableClick(object sender, EventArgs e)
         {
             listViewTable.Items.Clear();
             listViewTable.Columns.Clear();
@@ -117,7 +119,7 @@ namespace FredAzureStorageExplorer
 
             if (table == null)
             {
-                throw new Exception("Cannot retrieve table");
+                throw new Exception("Cannot retrieve the Azure table");
             }
 
             var query = new TableQuery<UpdateEntity>();
@@ -139,12 +141,12 @@ namespace FredAzureStorageExplorer
             }
             catch (Exception exception)
             {
-                MessageBox.Show(exception.Message);
+                MessageBox.Show($@"There was an error: {exception.Message}");
                 return null;
             }
         }
 
-        private void buttonTableInsert_Click(object sender, EventArgs e)
+        private void ButtonTableInsertClick(object sender, EventArgs e)
         {
             if (textBoxTablePartitionKey.Text.Trim() == string.Empty || textBoxTableRowKey.Text.Trim() == string.Empty)
             {
@@ -171,7 +173,7 @@ namespace FredAzureStorageExplorer
             }
 
             // Refresh the table
-            buttonLoadTable_Click(sender, e);
+            ButtonLoadTableClick(sender, e);
         }
 
         private static UpdateEntity CreateEntity(string blobUrl, string comment, string enableEntity, string HCode, string HId, string machineName, string modeEntity, string statusEntity, string targetDate, string partitionKey, string rowKey, bool insertNewLine = true )
@@ -215,13 +217,13 @@ namespace FredAzureStorageExplorer
             newLine.RowKey = rowKey;
             newLine.Timestamp = DateTime.Now;
 
-            // check if line already exists and if so ask for confirmation to replace and add *
+            // check if line already exists in Azure and if so ask for confirmation to replace and add *
             newLine.ETag = insertNewLine ? string.Empty : "*";
 
             return newLine;
         }
 
-        private void listViewTable_SelectedIndexChanged(object sender, EventArgs e)
+        private void ListViewTableSelectedIndexChanged(object sender, EventArgs e)
         {
             // update textboxes according to the selected line
             if (listViewTable.Items.Count == 0)
@@ -263,7 +265,7 @@ namespace FredAzureStorageExplorer
             }
             catch (Exception exception)
             {
-                MessageBox.Show($@"Failed to update the Table - {exception.Message}");
+                MessageBox.Show($@"Failed to update the Azure Table - {exception.Message}");
             }
 
             return null;
@@ -279,13 +281,13 @@ namespace FredAzureStorageExplorer
             }
             catch (Exception exception)
             {
-                MessageBox.Show($@"Failed to insert the Table - {exception.Message}");
+                MessageBox.Show($@"Failed to insert the Azure Table - {exception.Message}");
             }
 
             return null;
         }
 
-        private void buttonTableUpdate_Click(object sender, EventArgs e)
+        private void ButtonTableUpdateClick(object sender, EventArgs e)
         {
             if (textBoxTablePartitionKey.Text.Trim() == string.Empty || textBoxTableRowKey.Text.Trim() == string.Empty)
             {
@@ -311,15 +313,15 @@ namespace FredAzureStorageExplorer
             }
 
             // Refresh the table
-            buttonLoadTable_Click(sender, e);
+            ButtonLoadTableClick(sender, e);
         }
 
-        private void buttonTableClear_Click(object sender, EventArgs e)
+        private void ButtonTableClearClick(object sender, EventArgs e)
         {
             listViewTable.Items.Clear();
         }
 
-        private void buttonBlobUpload_Click(object sender, EventArgs e)
+        private void ButtonBlobUploadClick(object sender, EventArgs e)
         {
             if (textBoxBlobUploadFilePath.Text.Trim() == string.Empty)
             {
@@ -353,7 +355,7 @@ namespace FredAzureStorageExplorer
 
         private async void UploadfileToBlobAzure(string localfilePath, string blobfilePath = "package")
         {
-            string accountName = textBoxAccountName.Text.ToLower(); // Azure naming convention in lower case
+            string accountName = textBoxAccountName.Text.ToLower(); // Azure naming convention is in lower case
             string accountKey = textBoxAccountKey.Text;
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse($"DefaultEndpointsProtocol=https;AccountName={accountName};AccountKey={accountKey};EndpointSuffix=core.windows.net");
             var blobStorageUri = storageAccount.BlobStorageUri;
@@ -402,7 +404,7 @@ namespace FredAzureStorageExplorer
             }
         }
 
-        private void buttonBlobUploadGetFile_Click(object sender, EventArgs e)
+        private void ButtonBlobUploadGetFileClick(object sender, EventArgs e)
         {
             textBoxBlobUploadFilePath.Text = ChooseOneFile("MSI files (*.msi)|*.msi|All files (*.*)|*.*");
         }
@@ -427,12 +429,12 @@ namespace FredAzureStorageExplorer
             return result;
         }
 
-        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        private void FormMainFormClosing(object sender, FormClosingEventArgs e)
         {
             SaveWindowValues();
         }
 
-        private void cutToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CutToolStripMenuItemClick(object sender, EventArgs e)
         {
             Control focusedControl = FindFocusedControl(new List<Control>
             {
@@ -462,7 +464,7 @@ namespace FredAzureStorageExplorer
             }
         }
 
-        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        private void CopyToolStripMenuItemClick(object sender, EventArgs e)
         {
             Control focusedControl = FindFocusedControl(new List<Control>
             {
@@ -492,7 +494,7 @@ namespace FredAzureStorageExplorer
             }
         }
 
-        private void pasteToolStripMenuItem_Click(object sender, EventArgs e)
+        private void PasteToolStripMenuItemClick(object sender, EventArgs e)
         {
             Control focusedControl = FindFocusedControl(new List<Control>
             {
@@ -685,7 +687,7 @@ namespace FredAzureStorageExplorer
             button.Enabled = result;
         }
 
-        private void textBoxBlobUploadFilePath_TextChanged(object sender, EventArgs e)
+        private void TextBoxBlobUploadFilePathTextChanged(object sender, EventArgs e)
         {
             buttonBlobUpload.Enabled = File.Exists(textBoxBlobUploadFilePath.Text.Trim());
         }
