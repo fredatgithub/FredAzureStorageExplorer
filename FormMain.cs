@@ -341,9 +341,7 @@ namespace FredAzureStorageExplorer
             
             try
             {
-                //ServiceHelper.Instance.SetProxySettings();
-                //ServiceHelper.Instance.Setup();
-
+                //TODO add code to upload something like
                 //UploadfileToBlobAzure(textBoxBlobUploadFilePath.Text);
                 //MessageBox.Show($@"The file {textBoxBlobUploadFilePath.Text} has been uploaded into {textBoxAccountName.Text}", @"Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -548,7 +546,7 @@ namespace FredAzureStorageExplorer
                 textBoxTableComments
             }); 
             TextBox control = focusedControl as TextBox;
-            if (control != null) control.SelectAll();
+            control?.SelectAll();
         }
 
         private void CutToClipboard(TextBoxBase tb, string errorMessage = "nothing")
