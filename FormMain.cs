@@ -91,7 +91,7 @@ namespace FredAzureStorageExplorer
             listViewTable.FullRowSelect = true;
             listViewTable.GridLines = true;
             listViewTable.Sorting = SortOrder.None;
-            
+
             foreach (UpdateEntity entity in GetEntitiesFromTable())
             {
                 ListViewItem newLine = new ListViewItem { Checked = false };
@@ -177,7 +177,7 @@ namespace FredAzureStorageExplorer
             ButtonLoadTableClick(sender, e);
         }
 
-        private static UpdateEntity CreateEntity(string blobUrl, string comment, string enableEntity, string HCode, string HId, string machineName, string modeEntity, string statusEntity, string targetDate, string partitionKey, string rowKey, bool insertNewLine = true )
+        private static UpdateEntity CreateEntity(string blobUrl, string comment, string enableEntity, string HCode, string HId, string machineName, string modeEntity, string statusEntity, string targetDate, string partitionKey, string rowKey, bool insertNewLine = true)
         {
             UpdateEntity newLine = new UpdateEntity();
             newLine.BlobUrl = blobUrl;
@@ -295,7 +295,7 @@ namespace FredAzureStorageExplorer
                 MessageBox.Show(@"Partition key or Row key cannot be empty", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            
+
             // update table
             UpdateEntity newLine = CreateEntity(textBoxTableBlobUrl.Text, textBoxTableComments.Text,
                 textBoxTableEnabled.Text, textBoxTableHCode.Text, textBoxTableHCode.Text,
@@ -341,7 +341,7 @@ namespace FredAzureStorageExplorer
                 MessageBox.Show(@"The version folder name cannot be empty, the file will be uploaded into a folder named with a version", @"Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            
+
             try
             {
                 //TODO add code to upload something like
@@ -373,7 +373,7 @@ namespace FredAzureStorageExplorer
             };
 
             await cloudBlobContainer.SetPermissionsAsync(permissions);
-            
+
             // Get a reference to the blob address, then upload the file to the blob.
             CloudBlockBlob cloudBlockBlob = cloudBlobContainer.GetBlockBlobReference(blobfilePath);
             await cloudBlockBlob.UploadFromFileAsync(localfilePath);
@@ -396,11 +396,11 @@ namespace FredAzureStorageExplorer
                     }
                 }
 
-                MessageBox.Show(@"file uploaded correctly");
+                MessageBox.Show(@"file uploaded correctly into Azure");
             }
             catch (StorageException exception)
             {
-                MessageBox.Show($@"file not uploaded correctly, the exception is {exception.Message}");
+                MessageBox.Show($@"file not uploaded correctly into Azure, the exception is {exception.Message}");
                 throw;
             }
         }
@@ -418,6 +418,7 @@ namespace FredAzureStorageExplorer
             fd.CheckFileExists = checkIfFileExists;
             if (initialDirectory == string.Empty)
             {
+                //Add code to check if Environment.GetEnvironmentVariable("systemdrive") is not null or does exist
                 initialDirectory = $"{Environment.GetEnvironmentVariable("systemdrive")}\\";
             }
 
@@ -457,7 +458,7 @@ namespace FredAzureStorageExplorer
                 textBoxTableBlobUrl,
                 textBoxTableTargetDate,
                 textBoxTableComments
-            }); 
+            });
             var tb = focusedControl as TextBox;
             if (tb != null)
             {
@@ -487,7 +488,7 @@ namespace FredAzureStorageExplorer
                 textBoxTableBlobUrl,
                 textBoxTableTargetDate,
                 textBoxTableComments
-            }); 
+            });
             var tb = focusedControl as TextBox;
             if (tb != null)
             {
@@ -547,59 +548,64 @@ namespace FredAzureStorageExplorer
                 textBoxTableBlobUrl,
                 textBoxTableTargetDate,
                 textBoxTableComments
-            }); 
+            });
             TextBox control = focusedControl as TextBox;
             control?.SelectAll();
         }
 
-        private void CutToClipboard(TextBoxBase tb, string errorMessage = "nothing")
+        private void CutToClipboard(TextBoxBase textBox, string errorMessage = "nothing")
         {
-            if (tb != ActiveControl) return;
-            if (tb.Text == string.Empty)
+            if (textBox != ActiveControl)
+            {
+                return;
+            }
+
+            if (textBox.Text == string.Empty)
             {
                 DisplayMessage("There Is " + errorMessage + " " + "To Cut ", errorMessage, MessageBoxButtons.OK);
                 return;
             }
 
-            if (tb.SelectedText == string.Empty)
+            if (textBox.SelectedText == string.Empty)
             {
                 DisplayMessage("No Text Has Been Selected", errorMessage, MessageBoxButtons.OK);
                 return;
             }
 
-            Clipboard.SetText(tb.SelectedText);
-            tb.SelectedText = string.Empty;
+            Clipboard.SetText(textBox.SelectedText);
+            textBox.SelectedText = string.Empty;
         }
 
-        private void CopyToClipboard(TextBoxBase tb, string message = "nothing")
+        private void CopyToClipboard(TextBoxBase textBox, string message = "nothing")
         {
-            if (tb != ActiveControl) return;
-            if (tb.Text == string.Empty)
+            if (textBox != ActiveControl) return;
+            if (textBox.Text == string.Empty)
             {
                 DisplayMessage($"There Is Nothing To Copy", message, MessageBoxButtons.OK);
                 return;
             }
 
-            if (tb.SelectedText == string.Empty)
+            if (textBox.SelectedText == string.Empty)
             {
                 DisplayMessage("No Text Has Been Selected", message, MessageBoxButtons.OK);
                 return;
             }
 
-            Clipboard.SetText(tb.SelectedText);
+            Clipboard.SetText(textBox.SelectedText);
         }
 
-        private void PasteFromClipboard(TextBoxBase tb)
+        private void PasteFromClipboard(TextBoxBase textBox)
         {
-            if (tb != ActiveControl) return;
-            var selectionIndex = tb.SelectionStart;
-            tb.SelectedText = Clipboard.GetText();
-            tb.SelectionStart = selectionIndex + Clipboard.GetText().Length;
+            if (textBox != ActiveControl) return;
+            var selectionIndex = textBox.SelectionStart;
+            textBox.SelectedText = Clipboard.GetText();
+            textBox.SelectionStart = selectionIndex + Clipboard.GetText().Length;
         }
 
         private void DisplayMessage(string message, string title, MessageBoxButtons buttons)
         {
             MessageBox.Show(this, message, title, buttons);
+
         }
 
         private static Control FindFocusedControl(Control container)
@@ -609,29 +615,32 @@ namespace FredAzureStorageExplorer
                 return childControl;
             }
 
-            return (from Control childControl in container.Controls
-                select FindFocusedControl(childControl)).FirstOrDefault(maybeFocusedControl => maybeFocusedControl != null);
+            return (from Control childControl in container.Controls select FindFocusedControl(childControl)).FirstOrDefault(maybeFocusedControl => maybeFocusedControl != null);
         }
 
         private static Control FindFocusedControl(List<Control> container)
         {
             return container.FirstOrDefault(control => control.Focused);
+
         }
 
         private static Control FindFocusedControl(params Control[] container)
         {
             return container.FirstOrDefault(control => control.Focused);
+
         }
 
         private static Control FindFocusedControl(IEnumerable<Control> container)
         {
             return container.FirstOrDefault(control => control.Focused);
+
         }
 
         private static string PeekDirectory()
         {
             string result = string.Empty;
             FolderBrowserDialog fbd = new FolderBrowserDialog();
+
             if (fbd.ShowDialog() == DialogResult.OK)
             {
                 result = fbd.SelectedPath;
@@ -643,10 +652,10 @@ namespace FredAzureStorageExplorer
         private string PeekFile()
         {
             string result = string.Empty;
-            OpenFileDialog fd = new OpenFileDialog();
-            if (fd.ShowDialog() == DialogResult.OK)
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            if (fileDialog.ShowDialog() == DialogResult.OK)
             {
-                result = fd.SafeFileName;
+                result = fileDialog.SafeFileName;
             }
 
             return result;
@@ -683,6 +692,8 @@ namespace FredAzureStorageExplorer
                         break;
                     }
                 }
+
+                //Add any other control you would like to test
             }
 
             button.Enabled = result;
