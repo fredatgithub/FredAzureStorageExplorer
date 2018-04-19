@@ -11,6 +11,7 @@
     {
         New = 0,
         Processed = 1,
+        Failed = 2,
         Unknown = 9
     }
 }
