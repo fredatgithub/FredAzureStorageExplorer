@@ -37,11 +37,13 @@ build:
   # MSBuild verbosity level
   #verbosity: quiet|minimal|normal|detailed
   verbosity: minimal
-  parallel: true  
+  parallel: true 
+  project: .sln
 
 # scripts to run before build
-#before_build:
- 
+before_build: 
+nuget restore
+
 # scripts to run after build
 #after_build:
  
