@@ -38,7 +38,7 @@ build:
   #verbosity: quiet|minimal|normal|detailed
   verbosity: minimal
   parallel: true 
-  project: .sln
+  project: FredAzureStorageExplorer.sln
 
 # scripts to run before build
 before_build: 
